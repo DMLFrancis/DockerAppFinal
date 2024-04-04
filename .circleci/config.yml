@@ -58,6 +58,8 @@ jobs:
       - run:
           name: start-docker-container
           command: docker start integration_app
+          environment:
+            CONTAINER_NAME: integration_app  # Set CONTAINER_NAME environment variable
   deploy:
     docker:
       - image: circleci/node:10.16.3
@@ -65,4 +67,3 @@ jobs:
       - run:
           name: deploy-application
           command: ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-50-106-130.eu-north-1.compute.amazonaws.com "export SERVER=\"$SERVER\"; export IMAGE_NAME=\"$IMAGE_NAME\"; export PRIVATE_KEY=\"$PRIVATE_KEY\"; rm -rf ~/DockerAppFinal/;git clone https://github.com/DMLFrancis/DockerAppFinal.git; source DockerAppFinal/deploy.sh"
-
